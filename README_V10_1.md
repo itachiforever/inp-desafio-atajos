@@ -1,0 +1,1 @@
+V10.1: corrección visual del dado. Mantiene el servidor y las preguntas de V10. El dado queda inclinado en reposo para que se perciban varias caras, y el lanzamiento realiza un giro continuo que termina en el resultado. Pendiente de prueba visual en navegador y partidas reales.

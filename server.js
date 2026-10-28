@@ -4,6 +4,10 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const rooms=new Map();
+for(let i=1;i<=8;i++){
+ const code='PUBLICA'+i;
+ rooms.set(code,{code,isPublic:true,isPermanent:true,status:'lobby',host:null,players:[],turn:0,direction:1,dice:null,question:null,answerer:null,pending:0,reverse:false,awaitNext:false,lastAnswer:null,deck:[],lastFace:null,rollSeq:0,message:'Sala pública '+i+' · esperando jugadores',version:1,updated:Date.now()});
+}
 const questions=[
  [
   "01 · Ctrl + C",
@@ -328,10 +332,10 @@ function publicRoom(r){return {code:r.code,status:r.status,host:r.host,players:r
 function advance(r){r.players[r.turn].turns++;if(r.players.every(p=>p.turns>=3)){r.status='finished';r.message='¡Partida terminada!';r.dice=null;return;}for(let step=1;step<=r.players.length;step++){const idx=(r.turn+r.direction*step+r.players.length*4)%r.players.length;if(r.players[idx].turns<3){r.turn=idx;break;}}r.dice=null;r.answerer=null;r.pending=0;r.awaitNext=false;}
 function question(r){if(!r.deck.length){r.status='finished';r.message='No quedan preguntas nuevas. Fin de la partida.';r.question=null;return;}const q=questions[r.deck.pop()];r.question={key:q[0],prompt:q[1],options:q[2],correct:q[3],explanation:q[4]};r.lastAnswer=null;}
 function processAction(body){const op=String(body.op||'');let r;
-if(op==='list'){return {rooms:[...rooms.values()].filter(x=>x.isPublic&&x.status==='lobby').map(x=>({code:x.code,players:x.players.length,max:12}))};}
+if(op==='list'){return {rooms:[...rooms.values()].filter(x=>x.isPermanent).map(x=>({code:x.code,players:x.players.length,max:12,status:x.status}))};}
 if(op==='create'){const name=String(body.name||'').trim().slice(0,24);if(!name)throw Error('Introduce tu nombre.');const isPublic=body.isPublic===true;const code=newCode(),token=crypto.randomBytes(24).toString('hex');r={code,isPublic,status:'lobby',host:1,players:[{id:1,name,score:0,turns:0,token}],turn:0,direction:1,dice:null,question:null,answerer:null,pending:0,reverse:false,awaitNext:false,lastAnswer:null,deck:[],lastFace:null,rollSeq:0,message:'Sala creada. Comparte el código.',version:1,updated:Date.now()};rooms.set(code,r);return {room:publicRoom(r),id:1,token};}
 const code=String(body.code||'').trim().toUpperCase();r=rooms.get(code);if(!r)throw Error('Sala no encontrada o caducada.');r.updated=Date.now();
-if(op==='join'){const name=String(body.name||'').trim().slice(0,24);if(!name)throw Error('Introduce tu nombre.');if(r.status!=='lobby')throw Error('La partida ya ha empezado.');if(r.players.length>=12)throw Error('Máximo 12 jugadores.');const id=Math.max(...r.players.map(p=>p.id))+1,token=crypto.randomBytes(24).toString('hex');r.players.push({id,name,score:0,turns:0,token});r.message=name+' se ha unido.';r.version++;return {room:publicRoom(r),id,token};}
+if(op==='join'){const name=String(body.name||'').trim().slice(0,24);if(!name)throw Error('Introduce tu nombre.');if(r.status!=='lobby')throw Error('La partida ya ha empezado.');if(r.players.length>=12)throw Error('Máximo 12 jugadores.');const id=Math.max(...r.players.map(p=>p.id))+1,token=crypto.randomBytes(24).toString('hex');r.players.push({id,name,score:0,turns:0,token});if(r.host===null)r.host=id;r.message=name+' se ha unido.';r.version++;return {room:publicRoom(r),id,token};}
 const me=r.players.find(p=>p.token===body.token);if(!me)throw Error('Acceso no válido.');if(op==='state')return {room:publicRoom(r),id:me.id};
 const active=r.players[r.turn];
 if(op==='start'){if(me.id!==r.host||r.status!=='lobby'||r.players.length<2)throw Error('El anfitrión debe iniciar con al menos dos jugadores.');r.status='playing';r.deck=questions.map((_,i)=>i);for(let i=r.deck.length-1;i>0;i--){const j=random(i+1);[r.deck[i],r.deck[j]]=[r.deck[j],r.deck[i]];}r.message='¡Comienza la partida!';}
@@ -342,5 +346,5 @@ else if(op==='next'){if(me.id!==active.id||!r.awaitNext)throw Error('No puedes a
 else throw Error('Acción desconocida.');r.version++;return {room:publicRoom(r),id:me.id};}
 const server=http.createServer((req,res)=>{const url=new URL(req.url,'http://localhost');if(req.method==='GET'&&url.pathname==='/health')return json(res,200,{ok:true});if(req.method==='POST'&&url.pathname==='/api'){let raw='';req.on('data',chunk=>{raw+=chunk;if(raw.length>10000)req.destroy();});req.on('end',()=>{try{json(res,200,{ok:true,...processAction(JSON.parse(raw))});}catch(e){json(res,400,{ok:false,error:e.message});}});return;}
 if(req.method!=='GET')return json(res,405,{error:'Método no permitido'});const name=url.pathname==='/'?'index.html':url.pathname.slice(1);if(!['index.html','app.js','style.css'].includes(name)){res.writeHead(404);return res.end('No encontrado');}const file=path.join(__dirname,'public',name);fs.readFile(file,(err,data)=>{if(err){res.writeHead(404);return res.end();}res.writeHead(200,{'Content-Type':name.endsWith('.js')?'text/javascript; charset=utf-8':name.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8'});res.end(data);});});
-setInterval(()=>{for(const [code,r] of rooms)if(Date.now()-r.updated>4*60*60*1000)rooms.delete(code);},600000).unref();
+setInterval(()=>{for(const [code,r] of rooms)if(!r.isPermanent&&Date.now()-r.updated>4*60*60*1000)rooms.delete(code);},600000).unref();
 server.listen(process.env.PORT||3000,'0.0.0.0',()=>console.log('INP Desafío de atajos listo en puerto',process.env.PORT||3000));

@@ -38,3 +38,12 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 
 /* V10 - claridad de preguntas, salas y movimiento uniforme */
 .row{display:flex;flex-wrap:wrap;align-items:center;column-gap:20px;row-gap:12px}.row strong{margin-right:10px}.row button{margin:0!important}.question h2{font-size:clamp(1rem,1.5vw,1.4rem);color:#9b2269}.question p{font-size:clamp(1rem,1.6vw,1.3rem);font-weight:700}.public-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-weight:900;color:#ffd76e}.public-heading button{width:auto!important;padding:7px 12px!important;margin:0!important;font-size:.7rem!important}.room-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.room-options button{min-width:0}.public-room{display:block;width:100%;margin:7px 0!important;padding:10px!important;text-align:left;background:linear-gradient(110deg,#1d76c4,#24448e)}#publicRooms{max-height:17vh;overflow:auto;text-align:left;color:#d7e9ff;font-size:.9rem;padding:5px}.die-cube.rolling{animation:inp-dice-v10 1.4s cubic-bezier(.12,.65,.21,1) both!important}@keyframes inp-dice-v10{0%{transform:rotateX(calc(var(--rx) + 1080deg)) rotateY(calc(var(--ry) + 720deg))}100%{transform:rotateX(var(--rx)) rotateY(var(--ry))}}.cube-face{backface-visibility:hidden!important}.play-zone{justify-content:center}.question{max-width:1000px}#login{width:min(780px,96%);max-height:calc(100dvh - 110px);overflow:auto}#login h2{margin:8px 0 12px}#login button{margin:6px 0;padding:12px}.dice-stage{filter:none}.die-cube{filter:drop-shadow(0 12px 14px #0008)}@media(max-width:700px){.room-options{grid-template-columns:1fr}.row{gap:8px}.row strong{flex-basis:100%}.row button{flex:1;min-width:125px}.public-heading{font-size:.72rem}.public-heading button{min-width:0}.game-layout{min-height:0}.play-zone{min-height:0}}
+/* V10.1: cubo visible en perspectiva, sin giro de ida y vuelta */
+.dice-stage{perspective:550px;perspective-origin:50% 38%;overflow:visible}
+.die-cube{transform-style:preserve-3d!important;transform:rotateX(calc(var(--rx) - 17deg)) rotateY(calc(var(--ry) - 20deg))!important}
+.die-cube.rolling{animation:inp-roll-101 1.45s cubic-bezier(.12,.62,.18,1) both!important}
+@keyframes inp-roll-101{
+  0%{transform:translateY(-26px) rotateX(calc(var(--rx) - 17deg - 1080deg)) rotateY(calc(var(--ry) - 20deg - 720deg))}
+  100%{transform:translateY(0) rotateX(calc(var(--rx) - 17deg)) rotateY(calc(var(--ry) - 20deg))}
+}
+.cube-face{backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;opacity:1}

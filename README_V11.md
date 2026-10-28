@@ -1,0 +1,1 @@
+V11: ocho salas públicas permanentes PUBLICA1..PUBLICA8. Visibles incluso vacías; entrada sin código; bloqueadas durante partida. Primera persona en entrar es anfitrión. Las salas privadas siguen disponibles. Nota: las salas públicas se reinician si se reinicia el servidor de Render.\n
