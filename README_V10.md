@@ -1,0 +1,1 @@
+INP PLAY V10: salas públicas consultables, creación pública/privada, enunciados sin pistas, resultado de respuesta oculto hasta contestar, animación continua de dado y cabecera espaciada. Se requiere comprobar partidas reales y la integración de WordPress. Nota: en el iframe, el pie de WordPress se oculta solo si el iframe cubre la ventana. Usar Elementor Canvas.
