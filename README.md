@@ -32,3 +32,14 @@ Abre `http://localhost:3000` en dos navegadores para probar la sala.
 ## Alcance de esta prueba
 
 Esta es una **versión piloto**: los estados de las salas se guardan en la memoria del proceso Node. Se pierden si Render reinicia o suspende el servicio; no admite varias réplicas simultáneas. La actualización de las pantallas se hace mediante consultas periódicas al servidor (aprox. 1,3 s). Para uso continuado habrá que añadir persistencia, reconexión más sólida y controles de administración. No contiene el plugin WordPress.
+
+
+## V2 - Mejoras de prueba
+- Banco ampliado a 72 preguntas; baraja única por sala sin repetir preguntas durante una partida.
+- Dado visual CSS con seis caras y resultado visible. Se evita el mismo número en lanzamientos consecutivos como regla de prueba (no es un dado estrictamente aleatorio).
+- Interfaz de juego más colorida.
+- Tras actualizar GitHub, Render debe desplegar la nueva versión.
+
+
+## V3 - Preguntas aportadas
+Se añaden 30 preguntas del documento del docente (verdadero/falso y respuesta libre convertida a elección). En una misma partida se selecciona como máximo una pregunta por atajo para evitar repeticiones conceptuales.
