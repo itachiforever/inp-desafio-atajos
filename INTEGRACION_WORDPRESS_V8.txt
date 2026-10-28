@@ -1,0 +1,11 @@
+INTEGRACIÓN WORDPRESS: PANTALLA COMPLETA
+
+La página PRUEBA3 actual tiene una columna del tema que limita el iframe.
+
+OPCIÓN RECOMENDADA: en Elementor, cambiar el diseño de la página a «Elementor Canvas» (sin cabecera ni pie). Insertar un widget HTML con este código, sustituyendo URL_RENDER por la URL real del juego:
+
+<iframe src="URL_RENDER" title="INP PLAY - Desafío de atajos" allow="fullscreen" style="display:block;width:100%;height:100dvh;border:0;margin:0;padding:0" loading="eager"></iframe>
+
+En Elementor: Sección/Contenedor: ancho completo, padding 0, márgenes 0. En móvil, comprobar 100dvh.
+
+Si se quiere conservar la cabecera de WordPress, usar plantilla ancho completo y asignar al iframe una altura calc(100dvh - altura_cabecera), pero no se podrá ocupar el 100% de la ventana.

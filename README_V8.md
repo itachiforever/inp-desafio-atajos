@@ -1,0 +1,1 @@
+V8: acceso nombre -> crear sala privada o unirse con código; el dado solo se anima en un lanzamiento nuevo (no al seleccionar otro jugador); guía de integración WordPress. Mantiene server.js. Nota: validar en Render y en una partida multijugador real.
