@@ -43,3 +43,9 @@ Esta es una **versión piloto**: los estados de las salas se guardan en la memor
 
 ## V3 - Preguntas aportadas
 Se añaden 30 preguntas del documento del docente (verdadero/falso y respuesta libre convertida a elección). En una misma partida se selecciona como máximo una pregunta por atajo para evitar repeticiones conceptuales.
+
+
+## V4 - Recuperación de partidas
+- Botón SALIR DE LA PARTIDA disponible en cualquier momento.
+- Al detectar una sala caducada tras un reinicio de Render, se limpia la sesión y se vuelve al inicio.
+- Salir desconecta la sesión de ese navegador, pero no elimina al jugador de una partida ya iniciada en el servidor. Para reiniciar completamente una sala, todos deben crear una nueva.
