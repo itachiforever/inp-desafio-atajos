@@ -49,3 +49,10 @@ Se añaden 30 preguntas del documento del docente (verdadero/falso y respuesta l
 - Botón SALIR DE LA PARTIDA disponible en cualquier momento.
 - Al detectar una sala caducada tras un reinicio de Render, se limpia la sesión y se vuelve al inicio.
 - Salir desconecta la sesión de ese navegador, pero no elimina al jugador de una partida ya iniciada en el servidor. Para reiniciar completamente una sala, todos deben crear una nueva.
+
+
+## V5 — Correcciones visuales y de animación
+- El sondeo de sala ya no vuelve a renderizar la pantalla si el estado no ha cambiado: evita el zoom infinito del dado.
+- Animación de giro 3D del dado al recibir un resultado nuevo.
+- Diseño compacto, fluido y desplazamiento vertical interno del documento para evitar recortes del contenido del juego.
+- En WordPress, establecer una altura suficiente para el iframe (recomendado: 1100px o 85vh con mínimo de 800px); si el tema impone una relación de aspecto al iframe, eliminarla.
