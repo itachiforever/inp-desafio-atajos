@@ -28,3 +28,10 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 .die-cube{--edge:clamp(100px,16vh,160px)}
 @media(max-width:700px){.game-layout{display:flex}.dice-stage{width:105px;height:105px}.die-cube{--edge:80px}#login{padding:18px}#login button{padding:12px}}
 @media(prefers-reduced-motion:reduce){.die-cube.rolling{animation:none}}
+
+/* V9: dado tridimensional, caras opacas y giro continuo en cada lanzamiento */
+.cube-face{backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;overflow:hidden;background:linear-gradient(145deg,#fffefd 0%,#ffe2f2 100%);box-shadow:inset -5px -5px 12px #e5a9d0;border:2px solid #fff!important}
+.die-cube{transform-style:preserve-3d;will-change:transform}
+.die-cube.rolling{animation:inp-dice-v9 1.65s cubic-bezier(.16,.72,.19,1) both!important}
+@keyframes inp-dice-v9{0%{transform:translateY(-34px) rotateX(calc(var(--rx) + 1080deg)) rotateY(calc(var(--ry) + 720deg)) rotateZ(360deg) scale(.86)}65%{transform:translateY(-8px) rotateX(calc(var(--rx) + 320deg)) rotateY(calc(var(--ry) + 210deg)) rotateZ(100deg) scale(1.06)}100%{transform:translateY(0) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(0deg) scale(1)}}
+@media(prefers-reduced-motion:reduce){.die-cube.rolling{animation:none!important}}
