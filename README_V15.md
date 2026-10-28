@@ -1,0 +1,1 @@
+V15: IDs únicos por jugador, validación reforzada de respuestas en servidor, nombre de sala pública legible y ocultación de copiar código en salas públicas. Dado CSS 3D revisado. Es necesaria prueba real con dos navegadores diferentes.

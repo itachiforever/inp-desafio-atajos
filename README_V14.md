@@ -1,0 +1,1 @@
+V14: pantalla principal con Ver salas públicas; vista separada de 8 salas; actualización incremental de textos sin reconstruir DOM ni parpadeos; volver al menú. Conserva entrada a partidas iniciadas de V13.

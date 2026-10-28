@@ -1,0 +1,1 @@
+V12: ocho salas públicas fijas; al salir se elimina realmente al jugador del servidor; anfitrión transferido; sala vacía reiniciada; cuadrícula de ocho salas; se oculta crear sala pública. Subir todos los archivos a GitHub/Render. No se modifica dado en esta entrega.

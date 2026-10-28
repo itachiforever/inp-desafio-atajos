@@ -1,0 +1,1 @@
+V13: se permite entrar en partidas públicas iniciadas, con puntuación cero y solo rondas pendientes. El turno en curso no se interrumpe. Salir de una sala con jugadores no cancela toda la partida. Se muestra ronda estimada. Limitación: el número de rondas continúa fijo en 3.
