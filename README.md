@@ -1,1 +1,34 @@
-# inp-desafio-atajos
+# INP PLAY · Desafío de atajos multijugador
+
+Juego educativo independiente para alumnos de Primaria, con salas compartidas desde diferentes dispositivos. Basado en las tarjetas de atajos de teclado utilizadas en INP Formación.
+
+## Cómo se juega
+
+1. Un participante crea una sala y comparte el código.
+2. Los demás entran con su nombre y ese código.
+3. El anfitrión inicia la partida (mínimo 2 participantes).
+4. Cada participante dispone de **3 turnos**, en orden; cada acierto vale **1 punto**.
+5. El dado decide la acción: **1** salta turno; **2** responde; **3** elige otro jugador para responder (el elegido gana los puntos); **4** responde e invierte el sentido; **5** doble reto (2 preguntas); **6** vuelve a tirar.
+6. Al finalizar se muestra la clasificación.
+
+## Probar en local
+
+Se necesita Node.js 18 o superior.
+
+```bash
+npm start
+```
+
+Abre `http://localhost:3000` en dos navegadores para probar la sala.
+
+## Publicar en GitHub y Render
+
+1. En GitHub, abre el repositorio `itachiforever/inp-desafio-atajos`.
+2. Sube **el contenido de esta carpeta**, no el ZIP de WordPress. En GitHub puedes usar `Add file` → `Upload files` y arrastrar los archivos y la carpeta `public`.
+3. En Render, selecciona **New** → **Web Service**, conecta GitHub y selecciona este repositorio.
+4. Configura: Runtime `Node`, Build Command `npm install`, Start Command `npm start`. Render proporciona el puerto mediante la variable `PORT`.
+5. Abre la URL que Render asigne al servicio y prueba desde dos dispositivos.
+
+## Alcance de esta prueba
+
+Esta es una **versión piloto**: los estados de las salas se guardan en la memoria del proceso Node. Se pierden si Render reinicia o suspende el servicio; no admite varias réplicas simultáneas. La actualización de las pantallas se hace mediante consultas periódicas al servidor (aprox. 1,3 s). Para uso continuado habrá que añadir persistencia, reconexión más sólida y controles de administración. No contiene el plugin WordPress.
