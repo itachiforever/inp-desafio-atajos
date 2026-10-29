@@ -40,7 +40,7 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 .row{display:flex;flex-wrap:wrap;align-items:center;column-gap:20px;row-gap:12px}.row strong{margin-right:10px}.row button{margin:0!important}.question h2{font-size:clamp(1rem,1.5vw,1.4rem);color:#9b2269}.question p{font-size:clamp(1rem,1.6vw,1.3rem);font-weight:700}.public-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-weight:900;color:#ffd76e}.public-heading button{width:auto!important;padding:7px 12px!important;margin:0!important;font-size:.7rem!important}.room-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.room-options button{min-width:0}.public-room{display:block;width:100%;margin:7px 0!important;padding:10px!important;text-align:left;background:linear-gradient(110deg,#1d76c4,#24448e)}#publicRooms{max-height:17vh;overflow:auto;text-align:left;color:#d7e9ff;font-size:.9rem;padding:5px}@keyframes inp-dice-v10{0%{transform:rotateX(calc(var(--rx) + 1080deg)) rotateY(calc(var(--ry) + 720deg))}100%{transform:rotateX(0deg) rotateY(0deg)}}.cube-face{backface-visibility:hidden!important}.play-zone{justify-content:center}.question{max-width:1000px}#login{width:min(780px,96%);max-height:calc(100dvh - 110px);overflow:auto}#login h2{margin:8px 0 12px}#login button{margin:6px 0;padding:12px}.dice-stage{filter:none}.die-cube{filter:drop-shadow(0 12px 14px #0008)}@media(max-width:700px){.room-options{grid-template-columns:1fr}.row{gap:8px}.row strong{flex-basis:100%}.row button{flex:1;min-width:125px}.public-heading{font-size:.72rem}.public-heading button{min-width:0}.game-layout{min-height:0}.play-zone{min-height:0}}
 /* V10.1: cubo visible en perspectiva, sin giro de ida y vuelta */
 .dice-stage{perspective:550px;perspective-origin:50% 38%;overflow:visible}
-.die-cube{transform-style:preserve-3d!important;transform:rotateX(calc(var(--rx) - 17deg)) rotateY(calc(var(--ry) - 20deg))!important}
+.die-cube{transform-style:preserve-3d!important}
 
 @keyframes inp-roll-101{
   0%{transform:translateY(-26px) rotateX(calc(var(--rx) - 17deg - 1080deg)) rotateY(calc(var(--ry) - 20deg - 720deg))}
@@ -59,7 +59,7 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 @media(max-width:520px){#stepPublic #publicRooms{gap:7px}#stepPublic #publicRooms .public-room{font-size:11px;min-height:68px;padding:9px}}
 
 /* V15: 3D cube with stable depth and visible side faces */
-.dice-stage{perspective:580px!important;perspective-origin:50% 45%!important}.die-cube:not(.rolling){transform:rotateX(calc(var(--rx) - 18deg)) rotateY(calc(var(--ry) - 22deg))!important}@keyframes inp-roll-v15{0%{transform:rotateX(calc(var(--rx) - 1098deg)) rotateY(calc(var(--ry) - 1102deg))}100%{transform:rotateX(calc(var(--rx) - 18deg)) rotateY(calc(var(--ry) - 22deg))}}.cube-face{backface-visibility:hidden!important}
+.dice-stage{perspective:580px!important;perspective-origin:50% 45%!important}.die-cube:not(.rolling){transform-style:preserve-3d}@keyframes inp-roll-v15{0%{transform:rotateX(calc(var(--rx) - 1098deg)) rotateY(calc(var(--ry) - 1102deg))}100%{transform:rotateX(calc(var(--rx) - 18deg)) rotateY(calc(var(--ry) - 22deg))}}.cube-face{backface-visibility:hidden!important}
 
 /* V17: las preguntas de elección múltiple mantienen una cuadrícula simétrica. */
 .question{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:10px}
@@ -70,3 +70,7 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 
 /* V18: cubo permanente y bloqueo de respuestas mientras gira */
 #capa-dado-3d{display:flex;justify-content:center;width:100%;margin:8px 0}#capa-dado-3d[hidden]{display:none!important}#actions.dice-locked{pointer-events:none;opacity:.65}.die-cube{animation:none!important;will-change:transform}
+
+/* V18.1: permitir que la rotacion inline del dado tenga prioridad sobre reglas antiguas */
+#capa-dado-3d .die-cube{transform-style:preserve-3d!important;transform:rotateX(0deg) rotateY(0deg)}
+#capa-dado-3d .cube-face{backface-visibility:hidden!important}

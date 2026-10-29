@@ -26,15 +26,15 @@ function animateDie(value){const cube=document.querySelector('#capa-dado-3d .die
 function syncDie(r){const layer=$('capa-dado-3d');if(!layer)return;
  const seq=Number(r.rollSeq)||0;
  // A fresh session must show the existing result without replaying a past throw.
- if(lastSeenRollSeq===null){lastSeenRollSeq=seq;if(r.lastRollFace)setDieFace(r.lastRollFace);}
+ if(lastSeenRollSeq===null){lastSeenRollSeq=seq; if(r.lastRollFace)setDieFace(r.lastRollFace);}
  const newRoll=seq>lastSeenRollSeq;
- if(newRoll)lastSeenRollSeq=seq;
+ if(newRoll){lastSeenRollSeq=seq;layer.dataset.faceInitialized='1';}
  const value=r.dice||((newRoll||diceAnimating)?r.lastRollFace:null);
  if(value){layer.hidden=false;$('etiqueta-dado-v18').textContent=DICE_LABELS[value]||'';
- if(newRoll)animateDie(r.lastRollFace||value);
+ if(newRoll)animateDie(r.lastRollFace||value);else if(!diceAnimating && seq===lastSeenRollSeq && !layer.dataset.faceInitialized){setDieFace(value);layer.dataset.faceInitialized='1';}
  }else if(!diceAnimating){layer.hidden=true;}
 }
-function resetDie(){if(diceFrame!==null)cancelAnimationFrame(diceFrame);diceFrame=null;diceAnimating=false;lastSeenRollSeq=null;const layer=$('capa-dado-3d');if(layer)layer.hidden=true;const actions=$('actions');if(actions)actions.classList.remove('dice-locked');}
+function resetDie(){if(diceFrame!==null)cancelAnimationFrame(diceFrame);diceFrame=null;diceAnimating=false;lastSeenRollSeq=null;const layer=$('capa-dado-3d');if(layer){layer.hidden=true;delete layer.dataset.faceInitialized;}const actions=$('actions');if(actions)actions.classList.remove('dice-locked');}
 function render(){if(!room)return;$('login').hidden=true;$('game').hidden=false;$('roomCode').textContent=room.code.startsWith('PUBLICA')?'PÚBLICA '+room.code.replace('PUBLICA',''):room.code;$('copy').hidden=room.code.startsWith('PUBLICA');$('message').textContent=room.message||'';const players=$('players');players.replaceChildren();room.players.forEach((p,i)=>{const el=document.createElement('div');el.className='player'+(room.turn===i&&room.status==='playing'?' active':'');el.innerHTML='<strong>'+escapeHtml(p.name)+(p.id===auth.id?' (tú)':'')+'</strong><span class="small">⭐ '+p.score+' puntos · '+p.turns+'/3 turnos</span>';players.append(el);});const info=$('turnInfo'),a=$('actions');info.replaceChildren();a.replaceChildren();if(diceAnimating)a.classList.add('dice-locked');else a.classList.remove('dice-locked');if(room.status==='lobby'){resetDie();info.innerHTML='<p class="notice">'+(room.isPublic?'Sala pública: esperando jugadores.':'Sala privada: comparte el código para invitar.')+'</p>';if(auth.id===room.host)a.append(button('¡EMPEZAR PARTIDA!','start'));return;}
 if(room.status==='finished'){syncDie(room);info.innerHTML='<h2>🏆 ¡Fin de la partida!</h2><p>Clasificación final:</p>'+[...room.players].sort((x,y)=>y.score-x.score).map((p,i)=>'<p>'+(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' puntos</p>').join('');return;}
 const current=room.players[room.turn],mine=current.id===auth.id;const turn=document.createElement('div');turn.className='turn';turn.textContent='Ronda '+(room.round||1)+'/'+(room.totalRounds||3)+' · Turno de '+current.name+' · Sentido '+(room.direction===1?'→':'←');info.append(turn);syncDie(room);
