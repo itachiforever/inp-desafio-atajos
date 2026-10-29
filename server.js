@@ -328,7 +328,26 @@ const questions=[
 const json=(res,status,obj)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(obj));};
 const random=n=>crypto.randomInt(n);
 const newCode=()=>{let s;do{s=crypto.randomBytes(4).toString('hex').slice(0,6).toUpperCase()}while(rooms.has(s));return s};
-function publicRoom(r){return {round:r.status==='playing'?Math.min(3,1+Math.min(3,...r.players.map(p=>p.turns))):1,totalRounds:3,code:r.code,status:r.status,host:r.host,players:r.players.map(({id,name,score,turns})=>({id,name,score,turns})),turn:r.turn,direction:r.direction,dice:r.dice,isPublic:r.isPublic,rollSeq:r.rollSeq||0,question:r.question?{key:r.question.key,prompt:r.question.prompt,options:r.question.options}:null,answerer:r.answerer,pending:r.pending,awaitNext:r.awaitNext,lastAnswer:r.lastAnswer,message:r.message,version:r.version};}
+// Normalizar a cuatro opciones, manteniendo la respuesta correcta.
+function fourOptions(q){
+ const opts=q[2].slice(); const correct=q[3];
+ if(opts.length===2 && opts.includes('Verdadero') && opts.includes('Falso')){
+   // Para verdadero/falso, dos botones grandes simétricos son más honestos que inventar opciones.
+   return q;
+ }
+ if(opts.length===3){
+   const prompt=q[1].toLowerCase();
+   const pool=prompt.includes('f12')?['Seleccionar todo','Copiar el texto','Deshacer el último cambio']:
+   prompt.includes('alt + f4')?['Abrir una nueva ventana','Seleccionar todo','Pegar el contenido']:
+   prompt.includes('ctrl')?['Seleccionar todo','Abrir la ayuda','Pegar el contenido']:
+   ['Seleccionar todo','Abrir un documento nuevo','Deshacer el último cambio'];
+   const extra=pool.find(x=>!opts.some(o=>o.toLowerCase()===x.toLowerCase()));
+   if(extra)opts.push(extra);
+ }
+ return [q[0],q[1],opts,correct,q[4]];
+}
+for(let i=0;i<questions.length;i++)questions[i]=fourOptions(questions[i]);
+function publicRoom(r){return {round:r.status==='playing'?Math.min(3,1+Math.min(3,...r.players.map(p=>p.turns))):1,totalRounds:3,code:r.code,status:r.status,host:r.host,players:r.players.map(({id,name,score,turns})=>({id,name,score,turns})),turn:r.turn,direction:r.direction,dice:r.dice,lastFace:r.lastFace,isPublic:r.isPublic,rollSeq:r.rollSeq||0,question:r.question?{key:r.question.key,prompt:r.question.prompt,options:r.question.options}:null,answerer:r.answerer,pending:r.pending,awaitNext:r.awaitNext,lastAnswer:r.lastAnswer,message:r.message,version:r.version};}
 function advance(r){r.players[r.turn].turns++;if(r.players.every(p=>p.turns>=3)){r.status='finished';r.message='¡Partida terminada!';r.dice=null;return;}for(let step=1;step<=r.players.length;step++){const idx=(r.turn+r.direction*step+r.players.length*4)%r.players.length;if(r.players[idx].turns<3){r.turn=idx;break;}}r.dice=null;r.answerer=null;r.pending=0;r.awaitNext=false;}
 function question(r){if(!r.deck.length){r.status='finished';r.message='No quedan preguntas nuevas. Fin de la partida.';r.question=null;return;}const q=questions[r.deck.pop()];r.question={key:q[0],prompt:q[1],options:q[2],correct:q[3],explanation:q[4]};r.lastAnswer=null;}
 function processAction(body){const op=String(body.op||'');let r;
