@@ -73,3 +73,12 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 
 /* V18.1: respaldo visible si falla la descarga del motor 3D. */
 .dice-stage-v18{display:flex!important;align-items:center;justify-content:center;overflow:visible!important;perspective:580px!important}.dice-stage-v18 .die-cube{flex-shrink:0;--edge:clamp(75px,12vh,130px)}.dice-stage-v18 canvas{position:absolute;inset:0}.dice-stage-v18:has(canvas){overflow:hidden!important}
+
+/* V18.2: único dado cúbico sin dependencias de CDN; anula reglas heredadas */
+.dice-stage-v18{display:flex!important;align-items:center;justify-content:center;perspective:650px!important;perspective-origin:50% 48%!important;overflow:visible!important;filter:none!important;transform-style:preserve-3d!important}
+.dice-stage-v18 .die-cube{--edge:clamp(78px,12vh,132px);width:var(--edge)!important;height:var(--edge)!important;position:relative!important;flex:none;transform-style:preserve-3d!important;animation:none!important;filter:drop-shadow(0 12px 12px #0007)!important;will-change:transform}
+.dice-stage-v18 .die-cube.rolling{animation:none!important}
+.dice-stage-v18 .cube-face{backface-visibility:hidden!important;border:2px solid #fff!important;background:linear-gradient(135deg,#fffefa,#eee9df)!important;box-shadow:inset -5px -5px 10px #b9b1a244!important;border-radius:16%!important}
+.dice-stage-v18 .cube-face i{background:#e91e8f!important;box-shadow:inset -2px -2px 2px #ae0965!important}
+@media(max-width:700px){.dice-stage-v18 .die-cube{--edge:74px}}
+@media(max-height:540px){.dice-stage-v18 .die-cube{--edge:51px}}
