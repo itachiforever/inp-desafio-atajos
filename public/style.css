@@ -74,3 +74,22 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 /* V18.1: permitir que la rotacion inline del dado tenga prioridad sobre reglas antiguas */
 #capa-dado-3d .die-cube{transform-style:preserve-3d!important;transform:rotateX(0deg) rotateY(0deg)}
 #capa-dado-3d .cube-face{backface-visibility:hidden!important}
+
+/* V18.2: preservar las seis caras en el espacio 3D.
+   Un filtro aplicado al propio cubo fuerza la composicion plana de sus hijos.
+   La sombra se proyecta desde la escena, nunca desde el objeto 3D. */
+#capa-dado-3d .die-cube {
+  filter: none !important;
+  -webkit-filter: none !important;
+  transform-style: preserve-3d !important;
+}
+#capa-dado-3d .dice-stage {
+  perspective: 580px !important;
+  perspective-origin: 50% 42% !important;
+  filter: none !important;
+  overflow: visible !important;
+}
+#capa-dado-3d .cube-face {
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
