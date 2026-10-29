@@ -1,13 +1,16 @@
-# INP PLAY — Desafío de Atajos V18.2
+# INP PLAY — Desafío de Atajos V18
 
-Juego multijugador para GitHub + Render.
+Basado en la V17. Incluye ocho salas públicas, tres turnos por jugador y respuestas simétricas.
 
-## Corrección del dado
-
-Dado cúbico tridimensional con CSS 3D y animación JavaScript de 2,5 segundos. No requiere Three.js ni conexión a CDN. El servidor conserva el control del resultado y los turnos.
+## Cambios V18
+- Dado CSS 3D permanente, marfil con puntos fucsia; giro de 2,5 segundos con pequeño rebote.
+- Detección de lanzamientos mediante `rollSeq` existente en el servidor, incluidos resultados consecutivos iguales.
+- Las salas se cierran a nuevas incorporaciones al comenzar; las sesiones existentes pueden consultar el estado para reconectarse.
+- Conserva el resto de la lógica de turnos y preguntas de la V17.
+- Corregida selección de otro jugador para el resultado 3 (ID de texto).
 
 ## Despliegue
+Sube el contenido de este ZIP a tu repositorio de GitHub y deja que Render despliegue el servicio Node.js. `npm start` inicia el servidor y `npm run check` comprueba la sintaxis.
 
-Sustituye los archivos del repositorio GitHub y espera a que Render despliegue la actualización. Reinicia la pestaña con Ctrl+F5 para evitar archivos CSS/JS en caché.
-
-Comprobación recomendada: 6 caras, 8 salas, 4 respuestas en 2×2, móviles y dos navegadores simultáneos.
+## Nota de pruebas
+Se han realizado comprobaciones automáticas de sintaxis y API; comprueba también la animación visual en móvil y escritorio antes de sustituir la versión publicada.
