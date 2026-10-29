@@ -105,3 +105,63 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 #capa-dado-3d .cube-face-6 {transform:rotateY(180deg) translateZ(var(--half-edge)) !important;}
 @media(max-width:700px){#capa-dado-3d .die-cube{--half-edge:40px}}
 @media(max-height:540px){#capa-dado-3d .die-cube{--half-edge:28px}}
+
+/* V18.4: caras de cubo reales, geometria coherente y sin filtros que aplanen 3D. */
+#capa-dado-3d .dice-stage {
+  display:grid !important; place-items:center !important;
+  perspective: 650px !important; perspective-origin: 50% 50% !important;
+  overflow:visible !important; filter:none !important; -webkit-filter:none !important;
+  transform:none !important;
+}
+#capa-dado-3d .die-cube {
+  --edge: clamp(100px, 16vh, 160px);
+  width:var(--edge) !important; height:var(--edge) !important;
+  position:relative !important; transform-style:preserve-3d !important;
+  filter:none !important; -webkit-filter:none !important;
+  overflow:visible !important; isolation:auto !important;
+  box-shadow:none !important; opacity:1 !important;
+}
+#capa-dado-3d .cube-face {
+  position:absolute !important; inset:0 !important;
+  width:var(--edge) !important; height:var(--edge) !important;
+  box-sizing:border-box !important;
+  display:grid !important; grid-template-columns:repeat(3,1fr) !important;
+  grid-template-rows:repeat(3,1fr) !important; gap:0 !important;
+  padding:13% !important; overflow:visible !important;
+  backface-visibility:hidden !important; -webkit-backface-visibility:hidden !important;
+  border:2px solid #fff9ee !important; border-radius:15% !important;
+  background:linear-gradient(145deg,#fffdf7,#e8dcd0) !important;
+  box-shadow:inset -7px -7px 11px #d4c4b8,inset 3px 3px 8px #fff !important;
+  transform-style:flat !important; opacity:1 !important;
+}
+#capa-dado-3d .cube-face-1 {transform:translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face-2 {transform:rotateY(90deg) translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face-3 {transform:rotateX(-90deg) translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face-4 {transform:rotateX(90deg) translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face-5 {transform:rotateY(-90deg) translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face-6 {transform:rotateY(180deg) translate3d(0,0,calc(var(--edge) / 2)) !important}
+#capa-dado-3d .cube-face i {grid-area:auto !important; width:clamp(9px,1.7vh,17px);height:clamp(9px,1.7vh,17px);background:#E91E8F !important;place-self:center}
+/* Posiciones clasicas de los puntos: 1 centro; 2 diagonal; 3 diagonal + centro; 4 esquinas; 5 esquinas + centro; 6 dos columnas. */
+#capa-dado-3d .cube-face-1 i:nth-child(1){grid-area:2/2 !important}
+#capa-dado-3d .cube-face-2 i:nth-child(1){grid-area:1/1 !important}
+#capa-dado-3d .cube-face-2 i:nth-child(2){grid-area:3/3 !important}
+#capa-dado-3d .cube-face-3 i:nth-child(1){grid-area:1/1 !important}
+#capa-dado-3d .cube-face-3 i:nth-child(2){grid-area:2/2 !important}
+#capa-dado-3d .cube-face-3 i:nth-child(3){grid-area:3/3 !important}
+#capa-dado-3d .cube-face-4 i:nth-child(1){grid-area:1/1 !important}
+#capa-dado-3d .cube-face-4 i:nth-child(2){grid-area:1/3 !important}
+#capa-dado-3d .cube-face-4 i:nth-child(3){grid-area:3/1 !important}
+#capa-dado-3d .cube-face-4 i:nth-child(4){grid-area:3/3 !important}
+#capa-dado-3d .cube-face-5 i:nth-child(1){grid-area:1/1 !important}
+#capa-dado-3d .cube-face-5 i:nth-child(2){grid-area:1/3 !important}
+#capa-dado-3d .cube-face-5 i:nth-child(3){grid-area:2/2 !important}
+#capa-dado-3d .cube-face-5 i:nth-child(4){grid-area:3/1 !important}
+#capa-dado-3d .cube-face-5 i:nth-child(5){grid-area:3/3 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(1){grid-area:1/1 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(2){grid-area:1/3 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(3){grid-area:2/1 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(4){grid-area:2/3 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(5){grid-area:3/1 !important}
+#capa-dado-3d .cube-face-6 i:nth-child(6){grid-area:3/3 !important}
+@media(max-width:700px){#capa-dado-3d .die-cube{--edge:80px}}
+@media(max-height:540px){#capa-dado-3d .die-cube{--edge:56px}}

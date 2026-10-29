@@ -17,3 +17,6 @@ Se han realizado comprobaciones automáticas de sintaxis y API; comprueba tambi�
 
 
 V18.3: Seis caras cerradas; profundidad translateZ con variable de semiarista explícita, sin división CSS. No se modifica la lógica de tiradas.
+
+
+V18.4: corregida geometría del cubo, disposición de puntos de 1 a 6 y caché CSS/JS. No cambia servidor ni reglas.
