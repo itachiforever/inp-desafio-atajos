@@ -9,9 +9,16 @@ if(room.status==='finished'){clearDiceGate();info.innerHTML='<h2>🏆 ¡Fin de l
 const current=room.players[room.turn],mine=current.id===auth.id;const turn=document.createElement('div');turn.className='turn';turn.textContent='Ronda '+(room.round||1)+'/'+(room.totalRounds||3)+' · Turno de '+current.name+' · Sentido '+(room.direction===1?'→':'←');info.append(turn);if(room.dice || (room.rollSeq && room.lastFace)){
  const face=room.dice||room.lastFace;const diceKey=room.code+':'+(room.rollSeq||0);const animateDie=lastDiceKey!==diceKey;lastDiceKey=diceKey;
  const d=document.createElement('div');d.className='dice';d.innerHTML='<div class="dice-stage dice-stage-v18" aria-label="Dado: '+face+'"></div><span class="dice-label">'+(['','Salta turno','¡Te toca responder!','Elige quién responde','Responde y cambia el sentido','¡Doble reto!','Tira otra vez'][face])+'</span>';info.append(d);
- const stage=d.querySelector('.dice-stage');const start=()=>{if(window.INP_DICE_V18){window.INP_DICE_V18.show(stage,face,animateDie,()=>{if(diceGateKey===diceKey){diceGateKey=null;clearTimeout(diceRevealTimer);a.classList.remove('dice-wait');}});}else{stage.textContent='🎲 '+face;diceGateKey=null;a.classList.remove('dice-wait');}};
+ const stage=d.querySelector('.dice-stage');
+ // El dado CSS permanece visible mientras se carga WebGL o si Three.js no está disponible.
+ const facePositions={1:'1',2:'2',3:'3',4:'4',5:'5',6:'6'};
+ const fallback=document.createElement('div');fallback.className='die-cube'+(animateDie?' rolling':'');fallback.dataset.value=facePositions[face];
+ for(let n=1;n<=6;n++){const side=document.createElement('div');side.className='cube-face cube-face-'+n;for(let k=0;k<n;k++)side.append(document.createElement('i'));fallback.append(side);}stage.append(fallback);
+ const start=()=>{if(!stage.isConnected||!window.INP_DICE_V18)return;window.INP_DICE_V18.show(stage,face,animateDie,()=>{if(diceGateKey===diceKey){diceGateKey=null;clearTimeout(diceRevealTimer);a.classList.remove('dice-wait');}});};
+ if(!window.INP_DICE_V18){window.addEventListener('inp-dice-ready',start,{once:true});}
+ 
  if(animateDie){diceGateKey=diceKey;a.classList.add('dice-wait');clearTimeout(diceRevealTimer);diceRevealTimer=setTimeout(()=>{if(diceGateKey===diceKey){diceGateKey=null;a.classList.remove('dice-wait');}},2800);}
- if(window.INP_DICE_V18)start();else window.addEventListener('inp-dice-ready',()=>{if(stage.isConnected)start();},{once:true});
+ if(window.INP_DICE_V18)start();
 }
 
 if(room.lastAnswer){const el=document.createElement('p');el.className='notice';el.textContent=(room.lastAnswer.ok?'✅ ¡Correcto!':'❌ Incorrecto.')+' Respuesta: '+room.lastAnswer.correct+'. '+room.lastAnswer.explanation;info.append(el);if(mine&&room.awaitNext)a.append(button('CONTINUAR','next'));return;}

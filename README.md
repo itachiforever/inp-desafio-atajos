@@ -56,3 +56,7 @@ Se añaden 30 preguntas del documento del docente (verdadero/falso y respuesta l
 - Animación de giro 3D del dado al recibir un resultado nuevo.
 - Diseño compacto, fluido y desplazamiento vertical interno del documento para evitar recortes del contenido del juego.
 - En WordPress, establecer una altura suficiente para el iframe (recomendado: 1100px o 85vh con mínimo de 800px); si el tema impone una relación de aspecto al iframe, eliminarla.
+
+
+## V18.1: dado de respaldo
+Si el motor Three.js no se descarga, se muestra automáticamente el dado CSS para evitar una pantalla vacía. El juego sigue siendo funcional.

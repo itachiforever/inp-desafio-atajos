@@ -2,7 +2,7 @@
 (async()=>{
  let THREE;
  try { THREE=await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js'); }
- catch(e){console.warn('Dado 3D no disponible:',e);return;}
+ catch(e){console.warn('Dado 3D no disponible; se mantiene el dado CSS:',e);return;}
  const normals=[new THREE.Vector3(1,0,0),new THREE.Vector3(-1,0,0),new THREE.Vector3(0,1,0),new THREE.Vector3(0,-1,0),new THREE.Vector3(0,0,1),new THREE.Vector3(0,0,-1)];
  const points={1:[[.5,.5]],2:[[.28,.28],[.72,.72]],3:[[.28,.28],[.5,.5],[.72,.72]],4:[[.28,.28],[.72,.28],[.28,.72],[.72,.72]],5:[[.28,.28],[.72,.28],[.5,.5],[.28,.72],[.72,.72]],6:[[.28,.25],[.72,.25],[.28,.5],[.72,.5],[.28,.75],[.72,.75]]};
  const material=Array.from({length:6},(_,i)=>{const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle='#faf8f2';x.fillRect(0,0,512,512);x.fillStyle='#e91e8f';for(const [px,py] of points[i+1]){x.beginPath();x.arc(px*512,py*512,37,0,Math.PI*2);x.fill();}const map=new THREE.CanvasTexture(c);map.colorSpace=THREE.SRGBColorSpace;return new THREE.MeshStandardMaterial({map,roughness:.34,metalness:0});});
