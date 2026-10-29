@@ -93,3 +93,15 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
 }
+
+/* V18.3: seis paredes reales del cubo, desplazamiento Z compatible con Firefox. */
+#capa-dado-3d .die-cube { --half-edge: clamp(50px, 8vh, 80px); transform-style: preserve-3d !important; }
+#capa-dado-3d .cube-face { width:100%; height:100%; box-sizing:border-box; position:absolute; inset:0; opacity:1; backface-visibility:hidden !important; -webkit-backface-visibility:hidden !important; background:linear-gradient(145deg,#fffefa,#f1e8dd) !important; border:2px solid #fff8ef !important; box-shadow:inset -6px -6px 10px #d9c9c0, inset 2px 2px 6px #fff !important; }
+#capa-dado-3d .cube-face-1 {transform:translateZ(var(--half-edge)) !important;}
+#capa-dado-3d .cube-face-2 {transform:rotateY(90deg) translateZ(var(--half-edge)) !important;}
+#capa-dado-3d .cube-face-3 {transform:rotateX(-90deg) translateZ(var(--half-edge)) !important;}
+#capa-dado-3d .cube-face-4 {transform:rotateX(90deg) translateZ(var(--half-edge)) !important;}
+#capa-dado-3d .cube-face-5 {transform:rotateY(-90deg) translateZ(var(--half-edge)) !important;}
+#capa-dado-3d .cube-face-6 {transform:rotateY(180deg) translateZ(var(--half-edge)) !important;}
+@media(max-width:700px){#capa-dado-3d .die-cube{--half-edge:40px}}
+@media(max-height:540px){#capa-dado-3d .die-cube{--half-edge:28px}}

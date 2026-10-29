@@ -14,3 +14,6 @@ Sube el contenido de este ZIP a tu repositorio de GitHub y deja que Render despl
 
 ## Nota de pruebas
 Se han realizado comprobaciones automáticas de sintaxis y API; comprueba también la animación visual en móvil y escritorio antes de sustituir la versión publicada.
+
+
+V18.3: Seis caras cerradas; profundidad translateZ con variable de semiarista explícita, sin división CSS. No se modifica la lógica de tiradas.
