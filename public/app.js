@@ -20,7 +20,7 @@ function animateDie(value){const cube=document.querySelector('#capa-dado-3d .die
  const x=x0+(x1-x0)*e,y=y0+(y1-y0)*e;
  const bounce=p<.82?-34*Math.sin(Math.PI*p/.82):-5*Math.sin(Math.PI*(p-.82)/.18);
  cube.style.transform=`translateY(${bounce}px) rotateX(${x}deg) rotateY(${y}deg)`;
- if(p<1){diceFrame=requestAnimationFrame(frame);}else{diceFrame=null;cube.dataset.rx=tx;cube.dataset.ry=ty;cube.style.transform=`translateY(0px) rotateX(${x1}deg) rotateY(${y1}deg)`;diceAnimating=false;$('actions').classList.remove('dice-locked');}}
+ if(p<1){diceFrame=requestAnimationFrame(frame);}else{diceFrame=null;cube.dataset.rx=x1;cube.dataset.ry=y1;cube.style.transform=`translateY(0px) rotateX(${x1}deg) rotateY(${y1}deg)`;diceAnimating=false;$('actions').classList.remove('dice-locked');}}
  diceFrame=requestAnimationFrame(frame);
 }
 function syncDie(r){const layer=$('capa-dado-3d');if(!layer)return;
