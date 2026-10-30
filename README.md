@@ -43,3 +43,9 @@ Integración de las seis caras Arcade vectoriales SVG en el dado 3D, con marcos 
 
 ### V18.11 — Corrección de carga de caras Arcade
 Se cierran dos bloques `@media` del CSS que impedían aplicar los SVG del dado en pantallas normales. Se conservan los seis SVG y la animación sin modificar el juego.
+
+
+## V18.12 — Corrección de caras Arcade visibles
+- Los seis SVG se incrustan en `public/style.css` como imágenes base64 para evitar errores de carga o rutas en Render/WordPress.
+- Se mantienen los archivos SVG originales en `public/dice/`.
+- Sin cambios en `public/app.js` ni en `server.js`; animación y mecánica intactas.
