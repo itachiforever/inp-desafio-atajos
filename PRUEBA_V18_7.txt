@@ -1,0 +1,1 @@
+V18.7 — Prueba de cierre de cubo. Únicamente cambia el CSS del dado: translateZ usa multiplicación compatible (edge * 0.5) y caras cuadradas sin recorte. HTML solo cambia versión de caché CSS/JS. app.js y server.js idénticos a V18.6.
