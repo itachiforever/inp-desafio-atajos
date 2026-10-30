@@ -24,3 +24,12 @@ V18.4: corregida geometría del cubo, disposición de puntos de 1 a 6 y caché C
 
 ## V18.5
 Se consolidan los estilos del dado en una sola sección, eliminando las reglas 3D antiguas, filtros de escena y sombras de contenedor. Se corrige el estado angular acumulado del dado y se mantiene el contador rollSeq del servidor.
+
+## V18.6
+Prueba de orientación de caras 3 y 4 siguiendo la propuesta externa; sin cambios en las reglas del juego.
+
+## V18.7
+Caras cuadradas para eliminar aberturas en esquinas; profundidad mediante `calc(var(--edge) * 0.5)`. Animación y lógica sin cambios.
+
+## V18.8
+Acabado Premium brillante del dado: marfil perlado con luces y sombras por cara y puntos fucsias con relieve. Se conservan las esquinas cuadradas, la geometría y el giro de 2,5 segundos. Solo cambia `public/style.css` y el parámetro de caché en `public/index.html`; `app.js` y `server.js` no se modifican.

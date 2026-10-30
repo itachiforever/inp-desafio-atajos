@@ -131,14 +131,14 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 
 
 
-/* V18.5 — ÚNICA DEFINICIÓN DEL DADO 3D */
+/* V18.8 — DADO PREMIUM MARFIL PERLADO (SOLO ACABADOS VISUALES) */
 #capa-dado-3d{display:flex;justify-content:center;width:100%;margin:8px 0;flex:none}
 #capa-dado-3d[hidden]{display:none!important}
 #capa-dado-3d .dice{display:flex;flex-direction:column;align-items:center;gap:10px;margin:0}
 #capa-dado-3d .dice-stage{width:clamp(120px,19vh,190px);height:clamp(120px,19vh,190px);display:grid;place-items:center;perspective:600px;perspective-origin:50% 50%;overflow:visible;filter:none;opacity:1}
 #capa-dado-3d .die-cube{--edge:clamp(88px,13vh,130px);position:relative;width:var(--edge);height:var(--edge);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);filter:none;opacity:1;will-change:transform}
-#capa-dado-3d .cube-face{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:12%;gap:2px;border:2px solid #fff;border-radius:0;background:#faf8f2;box-shadow:inset -6px -6px 11px #ddd2c5,inset 3px 3px 7px #fff,0 0 2px #6d5363;backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:1}
-#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset -2px -2px 3px #9f0c58;place-self:center}
+#capa-dado-3d .cube-face{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:12%;gap:2px;border:2px solid #fdf8ed;border-radius:0;background:linear-gradient(138deg,#ffffff 0%,#fffdf7 23%,#f7f0e3 62%,#e8dfcf 100%);box-shadow:inset 3px 3px 7px rgba(255,255,255,.95),inset -7px -8px 13px rgba(117,91,69,.23),0 0 2px rgba(90,66,62,.35);backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:1}
+#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:radial-gradient(circle at 34% 30%,#ff7cc5 0%,#f52b9a 36%,#c50a6b 78%,#97094f 100%);box-shadow:inset 2px 2px 3px rgba(85,0,50,.45),inset -1px -1px 2px rgba(255,197,228,.7),0 0 0 1px rgba(112,32,74,.2);place-self:center}
 #capa-dado-3d .cube-face-1{transform:translateZ(calc(var(--edge) * 0.5))}
 #capa-dado-3d .cube-face-2{transform:rotateY(90deg) translateZ(calc(var(--edge) * 0.5))}
 #capa-dado-3d .cube-face-3{transform:rotateX(90deg) translateZ(calc(var(--edge) * 0.5))}
