@@ -141,8 +141,8 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 #capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset -2px -2px 3px #9f0c58;place-self:center}
 #capa-dado-3d .cube-face-1{transform:translateZ(calc(var(--edge)/2))}
 #capa-dado-3d .cube-face-2{transform:rotateY(90deg) translateZ(calc(var(--edge)/2))}
-#capa-dado-3d .cube-face-3{transform:rotateX(-90deg) translateZ(calc(var(--edge)/2))}
-#capa-dado-3d .cube-face-4{transform:rotateX(90deg) translateZ(calc(var(--edge)/2))}
+#capa-dado-3d .cube-face-3{transform:rotateX(90deg) translateZ(calc(var(--edge)/2))}
+#capa-dado-3d .cube-face-4{transform:rotateX(-90deg) translateZ(calc(var(--edge)/2))}
 #capa-dado-3d .cube-face-5{transform:rotateY(-90deg) translateZ(calc(var(--edge)/2))}
 #capa-dado-3d .cube-face-6{transform:rotateY(180deg) translateZ(calc(var(--edge)/2))}
 #capa-dado-3d .cube-face-1 i:nth-child(1){grid-area:2/2}

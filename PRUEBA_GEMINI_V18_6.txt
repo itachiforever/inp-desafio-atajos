@@ -1,0 +1,1 @@
+V18.6 - Prueba de la propuesta de Gemini. Cambios EXCLUSIVOS del dado: intercambio de orientaciones X de caras 3 y 4 en style.css y sincronización de DICE_ORIENTATIONS en app.js. Caché 18.6 en index.html. No se modifica server.js ni lógica del juego. Esta prueba no garantiza resolver el aspecto hueco.
