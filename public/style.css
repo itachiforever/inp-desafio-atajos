@@ -131,14 +131,21 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 
 
 
-/* V18.8 — DADO PREMIUM MARFIL PERLADO (SOLO ACABADOS VISUALES) */
+/* V18.9 — SEIS CARAS DIBUJADAS NÍTIDAS (SOLO ASPECTO DEL DADO) */
 #capa-dado-3d{display:flex;justify-content:center;width:100%;margin:8px 0;flex:none}
 #capa-dado-3d[hidden]{display:none!important}
 #capa-dado-3d .dice{display:flex;flex-direction:column;align-items:center;gap:10px;margin:0}
 #capa-dado-3d .dice-stage{width:clamp(120px,19vh,190px);height:clamp(120px,19vh,190px);display:grid;place-items:center;perspective:600px;perspective-origin:50% 50%;overflow:visible;filter:none;opacity:1}
 #capa-dado-3d .die-cube{--edge:clamp(88px,13vh,130px);position:relative;width:var(--edge);height:var(--edge);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);filter:none;opacity:1;will-change:transform}
-#capa-dado-3d .cube-face{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:12%;gap:2px;border:2px solid #fdf8ed;border-radius:0;background:linear-gradient(138deg,#ffffff 0%,#fffdf7 23%,#f7f0e3 62%,#e8dfcf 100%);box-shadow:inset 3px 3px 7px rgba(255,255,255,.95),inset -7px -8px 13px rgba(117,91,69,.23),0 0 2px rgba(90,66,62,.35);backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:1}
-#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:radial-gradient(circle at 34% 30%,#ff7cc5 0%,#f52b9a 36%,#c50a6b 78%,#97094f 100%);box-shadow:inset 2px 2px 3px rgba(85,0,50,.45),inset -1px -1px 2px rgba(255,197,228,.7),0 0 0 1px rgba(112,32,74,.2);place-self:center}
+#capa-dado-3d .cube-face{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:12%;gap:2px;border:2px solid #b5a994;border-radius:0;background:#fffaf0;box-shadow:inset 0 0 0 2px #ffffff,inset -3px -3px 0 #e9dfcf;backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:1}
+#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}
+/* Tonos planos por cara: aristas visibles, sin degradados ni desenfoques. */
+#capa-dado-3d .cube-face-1{background:#fffaf0}
+#capa-dado-3d .cube-face-2{background:#f5eddf}
+#capa-dado-3d .cube-face-3{background:#fff7e9}
+#capa-dado-3d .cube-face-4{background:#eee4d3}
+#capa-dado-3d .cube-face-5{background:#f8f0e3}
+#capa-dado-3d .cube-face-6{background:#f1e8d8}
 #capa-dado-3d .cube-face-1{transform:translateZ(calc(var(--edge) * 0.5))}
 #capa-dado-3d .cube-face-2{transform:rotateY(90deg) translateZ(calc(var(--edge) * 0.5))}
 #capa-dado-3d .cube-face-3{transform:rotateX(90deg) translateZ(calc(var(--edge) * 0.5))}
@@ -169,5 +176,19 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 #capa-dado-3d .dice-label{color:#fff;background:#a82a77;padding:7px 16px;border-radius:25px;box-shadow:0 4px 0 #591a4a;font-size:clamp(.72rem,1.2vw,.95rem)}
 #actions.dice-locked{pointer-events:none}
 #actions.dice-locked button{opacity:.65}
-@media(max-width:700px){#capa-dado-3d .dice-stage{width:112px;height:112px}#capa-dado-3d .die-cube{--edge:78px}#capa-dado-3d .cube-face i{width:10px;height:10px}}
-@media(max-height:540px){#capa-dado-3d .dice-stage{width:84px;height:84px}#capa-dado-3d .die-cube{--edge:58px}#capa-dado-3d .cube-face i{width:8px;height:8px}}
+@media(max-width:700px){#capa-dado-3d .dice-stage{width:112px;height:112px}#capa-dado-3d .die-cube{--edge:78px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}
+@media(max-height:540px){#capa-dado-3d .dice-stage{width:84px;height:84px}#capa-dado-3d .die-cube{--edge:58px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}
+
+/* V18.10 — Caras Arcade SVG: se conserva íntegra la geometría y la animación 3D. */
+#capa-dado-3d .cube-face {
+  box-sizing:border-box; padding:0; border:0; border-radius:0;
+  box-shadow:none; background-color:#F8F1E5;
+  background-position:center; background-size:100% 100%; background-repeat:no-repeat;
+}
+#capa-dado-3d .cube-face-1 {background-image:url('/dice/cara_1.svg')}
+#capa-dado-3d .cube-face-2 {background-image:url('/dice/cara_2.svg')}
+#capa-dado-3d .cube-face-3 {background-image:url('/dice/cara_3.svg')}
+#capa-dado-3d .cube-face-4 {background-image:url('/dice/cara_4.svg')}
+#capa-dado-3d .cube-face-5 {background-image:url('/dice/cara_5.svg')}
+#capa-dado-3d .cube-face-6 {background-image:url('/dice/cara_6.svg')}
+#capa-dado-3d .cube-face i {display:none!important}

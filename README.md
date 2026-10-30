@@ -33,3 +33,9 @@ Caras cuadradas para eliminar aberturas en esquinas; profundidad mediante `calc(
 
 ## V18.8
 Acabado Premium brillante del dado: marfil perlado con luces y sombras por cara y puntos fucsias con relieve. Se conservan las esquinas cuadradas, la geometría y el giro de 2,5 segundos. Solo cambia `public/style.css` y el parámetro de caché en `public/index.html`; `app.js` y `server.js` no se modifican.
+
+## V18.9
+Se dibujan las seis caras con colores marfil planos, aristas cuadradas y nítidas y puntos fucsias definidos. Se retiran degradados y sombras difusas del acabado V18.8. No se modifica la geometría ni la animación; `app.js` y `server.js` permanecen idénticos.
+
+## V18.10
+Integración de las seis caras Arcade vectoriales SVG en el dado 3D, con marcos fucsias y cian, esquinas negras y amarillas, y puntos fucsias del 1 al 6. Sin cambios en la animación de 2,5 segundos ni en la lógica del juego.
