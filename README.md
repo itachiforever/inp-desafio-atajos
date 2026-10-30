@@ -49,3 +49,11 @@ Se cierran dos bloques `@media` del CSS que impedían aplicar los SVG del dado e
 - Los seis SVG se incrustan en `public/style.css` como imágenes base64 para evitar errores de carga o rutas en Render/WordPress.
 - Se mantienen los archivos SVG originales en `public/dice/`.
 - Sin cambios en `public/app.js` ni en `server.js`; animación y mecánica intactas.
+
+
+### V18.13 — Sincronización visual y avance automático
+- Durante los 2,5 segundos de giro, oculta etiqueta y acciones; al detenerse muestra el resultado.
+- Tras una respuesta, conserva la corrección visible y avanza automáticamente después de 3 segundos desde el navegador del jugador activo.
+- Sustituye la espera vacía por mensajes de transición.
+- Ajusta el fondo y las aristas del dado Arcade para reducir el reborde claro.
+- No modifica `server.js`, las reglas, las salas ni el sistema de puntuación.

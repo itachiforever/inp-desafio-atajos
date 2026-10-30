@@ -1,5 +1,5 @@
 'use strict';
-const $=id=>document.getElementById(id);let lastDiceKey=null;let lastSeenRollSeq=null;let diceAnimating=false;let diceFrame=null;let auth=JSON.parse(sessionStorage.getItem('inpAtajosSession')||'null'),room=null,busy=false,lastRenderedVersion=-1;
+const $=id=>document.getElementById(id);let lastDiceKey=null;let lastSeenRollSeq=null;let diceAnimating=false;let diceFrame=null;let autoNextTimer=null;let autoNextKey=null;let auth=JSON.parse(sessionStorage.getItem('inpAtajosSession')||'null'),room=null,busy=false,lastRenderedVersion=-1;
 const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function api(op,params={}){const response=await fetch('/api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({op,...(auth||{}),...params})});const data=await response.json();if(!data.ok)throw Error(data.error||'Error de conexión');if(data.token){auth={code:data.room.code,token:data.token,id:data.id};sessionStorage.setItem('inpAtajosSession',JSON.stringify(auth));}room=data.room;if(data.left)return data;if(room.version!==lastRenderedVersion){lastRenderedVersion=room.version;render();}return data;}
 async function action(op,params={}){if(busy)return;busy=true;try{$('error').textContent='';await api(op,params);}catch(e){$('error').textContent=e.message;if(op==='state'&&/no encontrada|caducada|no válido/i.test(e.message)){sessionStorage.removeItem('inpAtajosSession');auth=null;room=null;lastRenderedVersion=-1;resetDie();$('game').hidden=true;$('login').hidden=false;}}finally{busy=false;}}
@@ -9,7 +9,7 @@ const DICE_LABELS=['','Salta turno','¡Te toca responder!','Elige quién respond
 function setDieFace(value){const cube=document.querySelector('#capa-dado-3d .die-cube');if(!cube||!DICE_ORIENTATIONS[value])return;const [x,y]=DICE_ORIENTATIONS[value];cube.dataset.rx=x;cube.dataset.ry=y;cube.style.transform=`translateY(0px) rotateX(${x}deg) rotateY(${y}deg)`;}
 function animateDie(value){const cube=document.querySelector('#capa-dado-3d .die-cube');if(!cube||!DICE_ORIENTATIONS[value])return;
  if(diceFrame!==null)cancelAnimationFrame(diceFrame);
- diceAnimating=true;$('actions').classList.add('dice-locked');
+ diceAnimating=true;$('actions').classList.add('dice-locked');$('etiqueta-dado-v18').hidden=true;
  const x0=Number(cube.dataset.rx)||0,y0=Number(cube.dataset.ry)||0;
  const [tx,ty]=DICE_ORIENTATIONS[value];
  // The endpoint is congruent to the desired face on both axes; no end-of-spin snap.
@@ -20,7 +20,7 @@ function animateDie(value){const cube=document.querySelector('#capa-dado-3d .die
  const x=x0+(x1-x0)*e,y=y0+(y1-y0)*e;
  const bounce=p<.82?-34*Math.sin(Math.PI*p/.82):-5*Math.sin(Math.PI*(p-.82)/.18);
  cube.style.transform=`translateY(${bounce}px) rotateX(${x}deg) rotateY(${y}deg)`;
- if(p<1){diceFrame=requestAnimationFrame(frame);}else{diceFrame=null;cube.dataset.rx=x1;cube.dataset.ry=y1;cube.style.transform=`translateY(0px) rotateX(${x1}deg) rotateY(${y1}deg)`;diceAnimating=false;$('actions').classList.remove('dice-locked');}}
+ if(p<1){diceFrame=requestAnimationFrame(frame);}else{diceFrame=null;cube.dataset.rx=x1;cube.dataset.ry=y1;cube.style.transform=`translateY(0px) rotateX(${x1}deg) rotateY(${y1}deg)`;diceAnimating=false;$('actions').classList.remove('dice-locked');$('etiqueta-dado-v18').hidden=false;render();}}
  diceFrame=requestAnimationFrame(frame);
 }
 function syncDie(r){const layer=$('capa-dado-3d');if(!layer)return;
@@ -30,15 +30,16 @@ function syncDie(r){const layer=$('capa-dado-3d');if(!layer)return;
  const newRoll=seq>lastSeenRollSeq;
  if(newRoll){lastSeenRollSeq=seq;layer.dataset.faceInitialized='1';}
  const value=r.dice||((newRoll||diceAnimating)?r.lastRollFace:null);
- if(value){layer.hidden=false;$('etiqueta-dado-v18').textContent=DICE_LABELS[value]||'';
+ if(value){layer.hidden=false;$('etiqueta-dado-v18').textContent=DICE_LABELS[value]||'';$('etiqueta-dado-v18').hidden=diceAnimating||newRoll;
  if(newRoll)animateDie(r.lastRollFace||value);else if(!diceAnimating && seq===lastSeenRollSeq && !layer.dataset.faceInitialized){setDieFace(value);layer.dataset.faceInitialized='1';}
  }else if(!diceAnimating){layer.hidden=true;}
 }
-function resetDie(){if(diceFrame!==null)cancelAnimationFrame(diceFrame);diceFrame=null;diceAnimating=false;lastSeenRollSeq=null;const layer=$('capa-dado-3d');if(layer){layer.hidden=true;delete layer.dataset.faceInitialized;}const actions=$('actions');if(actions)actions.classList.remove('dice-locked');}
+function resetDie(){if(diceFrame!==null)cancelAnimationFrame(diceFrame);diceFrame=null;diceAnimating=false;lastSeenRollSeq=null;clearTimeout(autoNextTimer);autoNextTimer=null;autoNextKey=null;const layer=$('capa-dado-3d');if(layer){layer.hidden=true;delete layer.dataset.faceInitialized;}const actions=$('actions');if(actions)actions.classList.remove('dice-locked');}
 function render(){if(!room)return;$('login').hidden=true;$('game').hidden=false;$('roomCode').textContent=room.code.startsWith('PUBLICA')?'PÚBLICA '+room.code.replace('PUBLICA',''):room.code;$('copy').hidden=room.code.startsWith('PUBLICA');$('message').textContent=room.message||'';const players=$('players');players.replaceChildren();room.players.forEach((p,i)=>{const el=document.createElement('div');el.className='player'+(room.turn===i&&room.status==='playing'?' active':'');el.innerHTML='<strong>'+escapeHtml(p.name)+(p.id===auth.id?' (tú)':'')+'</strong><span class="small">⭐ '+p.score+' puntos · '+p.turns+'/3 turnos</span>';players.append(el);});const info=$('turnInfo'),a=$('actions');info.replaceChildren();a.replaceChildren();if(diceAnimating)a.classList.add('dice-locked');else a.classList.remove('dice-locked');if(room.status==='lobby'){resetDie();info.innerHTML='<p class="notice">'+(room.isPublic?'Sala pública: esperando jugadores.':'Sala privada: comparte el código para invitar.')+'</p>';if(auth.id===room.host)a.append(button('¡EMPEZAR PARTIDA!','start'));return;}
 if(room.status==='finished'){syncDie(room);info.innerHTML='<h2>🏆 ¡Fin de la partida!</h2><p>Clasificación final:</p>'+[...room.players].sort((x,y)=>y.score-x.score).map((p,i)=>'<p>'+(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' puntos</p>').join('');return;}
 const current=room.players[room.turn],mine=current.id===auth.id;const turn=document.createElement('div');turn.className='turn';turn.textContent='Ronda '+(room.round||1)+'/'+(room.totalRounds||3)+' · Turno de '+current.name+' · Sentido '+(room.direction===1?'→':'←');info.append(turn);syncDie(room);
-if(room.lastAnswer){const el=document.createElement('p');el.className='notice';el.textContent=(room.lastAnswer.ok?'✅ ¡Correcto!':'❌ Incorrecto.')+' Respuesta: '+room.lastAnswer.correct+'. '+room.lastAnswer.explanation;info.append(el);if(mine&&room.awaitNext)a.append(button('CONTINUAR','next'));return;}
+if(diceAnimating){const wait=document.createElement('p');wait.className='dice-wait';wait.textContent='🎲 El dado está girando…';a.append(wait);return;}
+if(room.lastAnswer){const el=document.createElement('p');el.className='notice';el.textContent=(room.lastAnswer.ok?'✅ ¡Correcto!':'❌ Incorrecto.')+' Respuesta: '+room.lastAnswer.correct+'. '+room.lastAnswer.explanation;info.append(el);if(mine&&room.awaitNext){const key=room.code+':'+room.version;if(autoNextKey!==key){clearTimeout(autoNextTimer);autoNextKey=key;autoNextTimer=setTimeout(()=>{autoNextTimer=null;if(room&&room.code+':'+room.version===key&&room.awaitNext&&!busy)action('next');},3000);}const hint=document.createElement('p');hint.className='next-hint';hint.textContent='Siguiente turno en unos segundos…';a.append(hint);}else if(room.awaitNext){const hint=document.createElement('p');hint.className='next-hint';hint.textContent='Preparando el siguiente turno…';a.append(hint);}return;}
 if(room.question){const q=document.createElement('div');q.className='question';q.innerHTML='<h2>🎯 Pregunta</h2><p>'+escapeHtml(room.question.prompt)+'</p>';const canAnswer=room.answerer===auth.id;room.question.options.forEach((option,i)=>{const b=button(option,'answer',{answer:i});b.className='answer';b.disabled=!canAnswer;q.append(b);});if(!canAnswer){const p=document.createElement('p');p.textContent='Responde '+(room.players.find(p=>p.id===room.answerer)?.name||'otro jugador');q.append(p);}a.append(q);return;}
 if(room.pending===3){if(mine){const p=document.createElement('p');p.textContent='Elige a otro jugador para que responda:';a.append(p);room.players.filter(p=>p.id!==auth.id).forEach(p=>a.append(button(p.name,'choose',{target:p.id})));}else{a.textContent='Esperando a que el jugador elija quién responde…';}return;}
 if(mine)a.append(button('🎲 LANZAR DADO','roll'));else a.textContent='Esperando el lanzamiento del dado…';}
