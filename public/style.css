@@ -176,10 +176,10 @@ header{position:relative;display:flex;align-items:center;gap:clamp(14px,3vw,48px
 #capa-dado-3d .dice-label{color:#fff;background:#a82a77;padding:7px 16px;border-radius:25px;box-shadow:0 4px 0 #591a4a;font-size:clamp(.72rem,1.2vw,.95rem)}
 #actions.dice-locked{pointer-events:none}
 #actions.dice-locked button{opacity:.65}
-@media(max-width:700px){#capa-dado-3d .dice-stage{width:112px;height:112px}#capa-dado-3d .die-cube{--edge:78px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}
-@media(max-height:540px){#capa-dado-3d .dice-stage{width:84px;height:84px}#capa-dado-3d .die-cube{--edge:58px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}
+@media(max-width:700px){#capa-dado-3d .dice-stage{width:112px;height:112px}#capa-dado-3d .die-cube{--edge:78px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}}
+@media(max-height:540px){#capa-dado-3d .dice-stage{width:84px;height:84px}#capa-dado-3d .die-cube{--edge:58px}#capa-dado-3d .cube-face i{display:block;width:clamp(10px,1.7vh,17px);height:clamp(10px,1.7vh,17px);border-radius:50%;background:#e91e8f;box-shadow:inset 0 -2px 0 #ae146c,0 0 0 1px #b91971;place-self:center}}
 
-/* V18.10 — Caras Arcade SVG: se conserva íntegra la geometría y la animación 3D. */
+/* V18.11 — Caras Arcade SVG: se conserva íntegra la geometría y la animación 3D. */
 #capa-dado-3d .cube-face {
   box-sizing:border-box; padding:0; border:0; border-radius:0;
   box-shadow:none; background-color:#F8F1E5;

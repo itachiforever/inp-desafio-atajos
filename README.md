@@ -39,3 +39,7 @@ Se dibujan las seis caras con colores marfil planos, aristas cuadradas y nítida
 
 ## V18.10
 Integración de las seis caras Arcade vectoriales SVG en el dado 3D, con marcos fucsias y cian, esquinas negras y amarillas, y puntos fucsias del 1 al 6. Sin cambios en la animación de 2,5 segundos ni en la lógica del juego.
+
+
+### V18.11 — Corrección de carga de caras Arcade
+Se cierran dos bloques `@media` del CSS que impedían aplicar los SVG del dado en pantallas normales. Se conservan los seis SVG y la animación sin modificar el juego.
